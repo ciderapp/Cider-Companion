@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewScreen extends StatefulWidget {
+  String ip;
+  WebViewScreen({Key? key, required this.ip}) : super(key: key);
   @override
   WebViewExampleState createState() => WebViewExampleState();
 }
@@ -13,13 +15,15 @@ class WebViewExampleState extends State<WebViewScreen> {
   void initState() {
     super.initState();
     // Enable hybrid composition.
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    //if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
 
   @override
   Widget build(BuildContext context) {
-    return WebView(
-      initialUrl: 'https://flutter.dev',
-    );
+    return SafeArea(
+        child: WebView(
+      javascriptMode: JavascriptMode.unrestricted,
+      initialUrl: "http://" + widget.ip.replaceAll("%3", ''),
+    ));
   }
 }

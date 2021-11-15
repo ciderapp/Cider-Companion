@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:ame_remote/webview.dart';
 import 'package:flutter/material.dart';
 import 'package:multicast_dns/multicast_dns.dart';
+import 'package:convert/convert.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,8 +13,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    ThemeData _darkTheme = ThemeData(
+      brightness: Brightness.dark,
+      hintColor: Colors.grey[400],
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: Color(0xFFFAFAFA),
+        selectionColor: Color(0x55FFFFFF),
+        selectionHandleColor: Color(0xFFFAFAFA),
+      ),
+      scaffoldBackgroundColor: Colors.black,
+    );
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -24,6 +38,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
+      darkTheme: _darkTheme,
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -42,20 +57,14 @@ class MyHomePage extends StatefulWidget {
   // always marked "final".
 
   final String title;
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   int _counter = 0;
 
-  void _incrementCounter() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => WebViewScreen()),
-    );
-  }
+  void _incrementCounter() {}
 
   void _scanMDNS() async {
     const String name = '_ame-lg-client._tcp.local';
@@ -70,17 +79,42 @@ class _MyHomePageState extends State<MyHomePage> {
       // which will have the port and local hostname.
       // Note that duplicate messages may come through, especially if any
       // other mDNS queries are running elsewhere on the machine.
-      await for (final SrvResourceRecord srv
-          in client.lookup<SrvResourceRecord>(
-              ResourceRecordQuery.service(ptr.domainName))) {
-        // Domain name will be something like "io.flutter.example@some-iphone.local._dartobservatory._tcp.local"
-        final String bundleId =
-            ptr.domainName; //.substring(0, ptr.domainName.indexOf('@'));
-        print('Dart observatory instance found at '
-            '${srv.target}:${srv.port} for "$bundleId".');
-      }
+      try {
+        await for (final SrvResourceRecord srv
+            in client.lookup<SrvResourceRecord>(
+                ResourceRecordQuery.service(ptr.domainName))) {
+          final String bundleId = ptr.domainName;
+          String ip =
+              utf8.decode(base64.decode(srv.name.replaceAll("." + name, ''))) +
+                  ":8090";
+
+          print('Web Remote found at: ' + ip);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => WebViewScreen(
+                      ip: ip,
+                    )),
+          );
+          client.stop();
+        }
+      } catch (e) {}
     }
-    client.stop();
+  }
+
+  late AnimationController animationController;
+  @override
+  void dispose() {
+    super.dispose();
+    animationController.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    animationController =
+        AnimationController(duration: new Duration(seconds: 2), vsync: this);
+    animationController.repeat();
   }
 
   @override
@@ -92,11 +126,12 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            'Connecting :)',
+            'Scanning Apple Music Electron Remote instance',
           ),
           Container(height: 20),
           CircularProgressIndicator(
-            color: Colors.green,
+            valueColor: animationController
+                .drive(ColorTween(begin: Colors.blueAccent, end: Colors.red)),
           ),
         ],
       ),

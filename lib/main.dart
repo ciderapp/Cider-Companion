@@ -117,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         print('s');
         String ip = utf8.decode(base64.decode(event.service!.name)) + ":8090";
         print('Web Remote found at: ' + ip);
-        if (!_state) {
+        if (!_state  && ip.length > 5) {
           setState(() {
             _state = true;
           });
@@ -137,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         print('s');
         String ip = utf8.decode(base64.decode(event.service!.name)) + ":8090";
         print('Web Remote found at: ' + ip);
-        if (!_state) {
+        if (!_state  && ip.length > 5) {
           setState(() {
             _state = true;
           });

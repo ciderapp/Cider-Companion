@@ -1,16 +1,12 @@
 # ame_remote
 
-A new Flutter project.
+The Remote Control App for Apple Music Electron , for iOS and Android
 
-## Getting Started
+## Background
 
-This project is a starting point for a Flutter application.
+This app is currently in development to be used with the 'web-sockets' branch of Apple Music Electron.
 
-A few resources to get you started if this is your first Flutter project:
+AME broadcast a mDNS advertisement and this app will automatically launch the web remote (from a WebView) 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## License
+MIT

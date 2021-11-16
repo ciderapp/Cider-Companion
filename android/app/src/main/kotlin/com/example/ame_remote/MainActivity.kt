@@ -1,4 +1,4 @@
-package com.example.ame_remote
+package com.ame.webremote
 
 import io.flutter.embedding.android.FlutterActivity
 

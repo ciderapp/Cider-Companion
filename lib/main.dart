@@ -63,7 +63,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
-  int _counter = 0;
+  bool _state = false;
 
   void _incrementCounter() {}
 
@@ -103,8 +103,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     // }
 
     // This is the type of service we're looking for :
-    String type = '_ame-lg-client._tcp';
 
+    String type = '_ame-lg-client._tcp';
 // Once defined, we can start the discovery :
     BonsoirDiscovery discovery = BonsoirDiscovery(type: type);
     await discovery.ready;
@@ -112,18 +112,24 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
 // If you want to listen to the discovery :
     discovery.eventStream!.listen((event) {
-      if (event.type == BonsoirDiscoveryEventType.DISCOVERY_SERVICE_FOUND) {
+      if (event.type ==
+          BonsoirDiscoveryEventType.DISCOVERY_SERVICE_RESOLVE_FAILED) {
         print('s');
         String ip = utf8.decode(base64.decode(event.service!.name)) + ":8090";
         print('Web Remote found at: ' + ip);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => WebViewScreen(
-                    ip: ip,
-                  )),
-        );
-        print('Service found : ${event.service!.toJson()}');
+        if (!_state) {
+          setState(() {
+            _state = true;
+          });
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => WebViewScreen(
+                      ip: ip,
+                    )),
+          );
+          print('Service found : ${event.service!.toJson()}');
+        }
         // Then if you want to stop the discovery :
         discovery.stop();
       } else if (event.type ==

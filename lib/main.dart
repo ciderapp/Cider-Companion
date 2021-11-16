@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       scaffoldBackgroundColor: Colors.black,
     );
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'AME Remote',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.

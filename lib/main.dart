@@ -36,10 +36,10 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.pink,
       ),
       darkTheme: _darkTheme,
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'AME'),
     );
   }
 }
@@ -89,6 +89,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ":8090";
 
           print('Web Remote found at: ' + ip);
+          client.stop();
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -96,7 +97,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       ip: ip,
                     )),
           );
-          client.stop();
         }
       } catch (e) {}
     }

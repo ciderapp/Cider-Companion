@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   void _incrementCounter() {}
 
   void _scanMDNS() async {
-    const String name = '_ame-lg-client._tcp.local';
+    //const String name = '_ame-lg-client._tcp.local';
     // final MDnsClient client = MDnsClient();
     // // Start the client with default options.
     // await client.start();
@@ -112,7 +112,17 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
 // If you want to listen to the discovery :
     discovery.eventStream!.listen((event) {
-      if (event.type == BonsoirDiscoveryEventType.DISCOVERY_SERVICE_RESOLVED) {
+      if (event.type == BonsoirDiscoveryEventType.DISCOVERY_SERVICE_FOUND) {
+        print('s');
+        String ip = utf8.decode(base64.decode(event.service!.name)) + ":8090";
+        print('Web Remote found at: ' + ip);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => WebViewScreen(
+                    ip: ip,
+                  )),
+        );
         print('Service found : ${event.service!.toJson()}');
         // Then if you want to stop the discovery :
         discovery.stop();

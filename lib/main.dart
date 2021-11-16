@@ -133,6 +133,26 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         // Then if you want to stop the discovery :
         discovery.stop();
       } else if (event.type ==
+          BonsoirDiscoveryEventType.DISCOVERY_SERVICE_FOUND) {
+        print('s');
+        String ip = utf8.decode(base64.decode(event.service!.name)) + ":8090";
+        print('Web Remote found at: ' + ip);
+        if (!_state) {
+          setState(() {
+            _state = true;
+          });
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => WebViewScreen(
+                      ip: ip,
+                    )),
+          );
+          print('Service found : ${event.service!.toJson()}');
+        }
+        // Then if you want to stop the discovery :
+        discovery.stop();
+      } else if (event.type ==
           BonsoirDiscoveryEventType.DISCOVERY_SERVICE_LOST) {
         print('Service lost : ${event.service!.toJson()}');
       }

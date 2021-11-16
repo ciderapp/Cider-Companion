@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:ame_remote/webview.dart';
+import 'package:bonsoir/bonsoir.dart';
 import 'package:flutter/material.dart';
 import 'package:multicast_dns/multicast_dns.dart';
 import 'package:convert/convert.dart';
@@ -68,38 +69,58 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   void _scanMDNS() async {
     const String name = '_ame-lg-client._tcp.local';
-    final MDnsClient client = MDnsClient();
-    // Start the client with default options.
-    await client.start();
+    // final MDnsClient client = MDnsClient();
+    // // Start the client with default options.
+    // await client.start();
 
-    // Get the PTR record for the service.
-    await for (final PtrResourceRecord ptr in client
-        .lookup<PtrResourceRecord>(ResourceRecordQuery.serverPointer(name))) {
-      // Use the domainName from the PTR record to get the SRV record,
-      // which will have the port and local hostname.
-      // Note that duplicate messages may come through, especially if any
-      // other mDNS queries are running elsewhere on the machine.
-      try {
-        await for (final SrvResourceRecord srv
-            in client.lookup<SrvResourceRecord>(
-                ResourceRecordQuery.service(ptr.domainName))) {
-          final String bundleId = ptr.domainName;
-          String ip =
-              utf8.decode(base64.decode(srv.name.replaceAll("." + name, ''))) +
-                  ":8090";
+    // // Get the PTR record for the service.
+    // await for (final PtrResourceRecord ptr in client
+    //     .lookup<PtrResourceRecord>(ResourceRecordQuery.serverPointer(name))) {
+    //   // Use the domainName from the PTR record to get the SRV record,
+    //   // which will have the port and local hostname.
+    //   // Note that duplicate messages may come through, especially if any
+    //   // other mDNS queries are running elsewhere on the machine.
+    //   try {
+    //     await for (final SrvResourceRecord srv
+    //         in client.lookup<SrvResourceRecord>(
+    //             ResourceRecordQuery.service(ptr.domainName))) {
+    //       final String bundleId = ptr.domainName;
+    //       String ip =
+    //           utf8.decode(base64.decode(srv.name.replaceAll("." + name, ''))) +
+    //               ":8090";
 
-          print('Web Remote found at: ' + ip);
-          client.stop();
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => WebViewScreen(
-                      ip: ip,
-                    )),
-          );
-        }
-      } catch (e) {}
-    }
+    //       print('Web Remote found at: ' + ip);
+    //       client.stop();
+    //       Navigator.push(
+    //         context,
+    //         MaterialPageRoute(
+    //             builder: (context) => WebViewScreen(
+    //                   ip: ip,
+    //                 )),
+    //       );
+    //     }
+    //   } catch (e) {}
+    // }
+
+    // This is the type of service we're looking for :
+    String type = '_ame-lg-client._tcp';
+
+// Once defined, we can start the discovery :
+    BonsoirDiscovery discovery = BonsoirDiscovery(type: type);
+    await discovery.ready;
+    await discovery.start();
+
+// If you want to listen to the discovery :
+    discovery.eventStream!.listen((event) {
+      if (event.type == BonsoirDiscoveryEventType.DISCOVERY_SERVICE_RESOLVED) {
+        print('Service found : ${event.service!.toJson()}');
+        // Then if you want to stop the discovery :
+        discovery.stop();
+      } else if (event.type ==
+          BonsoirDiscoveryEventType.DISCOVERY_SERVICE_LOST) {
+        print('Service lost : ${event.service!.toJson()}');
+      }
+    });
   }
 
   late AnimationController animationController;

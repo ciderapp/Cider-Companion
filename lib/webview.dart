@@ -20,10 +20,11 @@ class WebViewExampleState extends State<WebViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return WillPopScope(
+        onWillPop: () async => false,
         child: WebView(
-      javascriptMode: JavascriptMode.unrestricted,
-      initialUrl: "http://" + widget.ip.replaceAll("%3", ''),
-    ));
+          javascriptMode: JavascriptMode.unrestricted,
+          initialUrl: "http://" + widget.ip.replaceAll("%3", ''),
+        ));
   }
 }

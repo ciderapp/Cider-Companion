@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:ame_remote/webview.dart';
 import 'package:bonsoir/bonsoir.dart';
 import 'package:flutter/material.dart';
-import 'package:multicast_dns/multicast_dns.dart';
-import 'package:convert/convert.dart';
+import 'package:upnp/upnp.dart';
 
 void main() {
   runApp(MyApp());
@@ -103,6 +102,32 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     // }
 
     // This is the type of service we're looking for :
+    var disc = new DeviceDiscoverer();
+    await disc.start(ipv6: false);
+    disc.quickDiscoverClients().listen((client) async {
+      try {
+        var dev = await client.getDevice();
+        if (dev.friendlyName == "AME Remote") {
+          String ip = utf8.decode(base64.decode(dev.manufacturer)) + ":8090";
+          print('Web Remote found at: ' + ip);
+          if (!_state && ip.length > 5) {
+            setState(() {
+              _state = true;
+            });
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => WebViewScreen(
+                        ip: ip,
+                      )),
+            );
+          }
+        }
+      } catch (e, stack) {
+        print("ERROR: ${e} - ${client.location}");
+        print(stack);
+      }
+    });
 
     String type = '_ame-lg-client._tcp';
 // Once defined, we can start the discovery :
@@ -117,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         print('s');
         String ip = utf8.decode(base64.decode(event.service!.name)) + ":8090";
         print('Web Remote found at: ' + ip);
-        if (!_state  && ip.length > 5) {
+        if (!_state && ip.length > 5) {
           setState(() {
             _state = true;
           });
@@ -137,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         print('s');
         String ip = utf8.decode(base64.decode(event.service!.name)) + ":8090";
         print('Web Remote found at: ' + ip);
-        if (!_state  && ip.length > 5) {
+        if (!_state && ip.length > 5) {
           setState(() {
             _state = true;
           });

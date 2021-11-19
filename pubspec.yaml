@@ -33,7 +33,7 @@ dependencies:
   bonsoir: ^1.0.1+2
   upnp:
     git:
-      url: git://github.com/pinkfish/upnp.dart.git
+      url: git://github.com/vapormusic/upnp.dart.git
       ref: main
 
 dev_dependencies:

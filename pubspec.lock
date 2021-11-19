@@ -21,7 +21,7 @@ packages:
       name: bonsoir_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.0+1"
   boolean_selector:
     dependency: transitive
     description:
@@ -189,8 +189,8 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: aa3f7cb3be44cdd870d6b324891e48f02fe5db0a
-      url: "git://github.com/pinkfish/upnp.dart.git"
+      resolved-ref: "12144d22c62dca5dc88362cf6fd19a353af30e55"
+      url: "git://github.com/vapormusic/upnp.dart.git"
     source: git
     version: "3.0.2"
   vector_math:
@@ -206,7 +206,28 @@ packages:
       name: webview_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.13"
+    version: "2.3.1"
+  webview_flutter_android:
+    dependency: transitive
+    description:
+      name: webview_flutter_android
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.3.0"
+  webview_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: webview_flutter_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.5.1"
+  webview_flutter_wkwebview:
+    dependency: transitive
+    description:
+      name: webview_flutter_wkwebview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.4.0"
   xml:
     dependency: transitive
     description:
@@ -216,4 +237,4 @@ packages:
     version: "5.3.1"
 sdks:
   dart: ">=2.14.0 <3.0.0"
-  flutter: ">=2.0.0"
+  flutter: ">=2.5.0"

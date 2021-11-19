@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:ame_remote/webview.dart';
 import 'package:bonsoir/bonsoir.dart';
+import 'package:dlna_dart/dlna.dart';
 import 'package:flutter/material.dart';
 import 'package:upnp/upnp.dart';
 
@@ -100,6 +102,18 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     //     }
     //   } catch (e) {}
     // }
+    final searcher = search();
+    final m = await searcher.start();
+    Timer.periodic(Duration(seconds: 3), (timer) {
+      m.deviceList.forEach((key, value) async {
+        print(key);
+        if (value.info.friendlyName.contains('Wireless')) return;
+        print(value.info.friendlyName);
+        // final text = await value.position();
+        // final r = await value.seekByCurrent(text, 10);
+        // print(r);
+      });
+    });
 
     // This is the type of service we're looking for :
     var disc = new DeviceDiscoverer();

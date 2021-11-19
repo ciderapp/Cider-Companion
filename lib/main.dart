@@ -110,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
       Timer.periodic(Duration(seconds: 5), (timer) {
         try {
-          m.deviceList.forEach((key, value) async {
+          m.deviceList.forEach((key, value) {
             if (value.info.friendlyName.contains('AME Remote')) {
               if (!_state && value.info.URLBase.length > 5) {
                 setState(() {

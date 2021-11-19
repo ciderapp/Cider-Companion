@@ -103,35 +103,67 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     //     }
     //   } catch (e) {}
     // }
+    final searcher = search();
 
-    // This is the type of service we're looking for :
-    var disc = new DeviceDiscoverer();
-    await disc.start(ipv6: false);
-    disc.quickDiscoverClients().listen((client) async {
-      try {
-        var dev = await client.getDevice();
-        if (dev.friendlyName == "AME Remote") {
-          String ip = utf8.decode(base64.decode(dev.manufacturer)) + ":8090";
-          print('Web Remote found at: ' + ip);
-          if (!_state && ip.length > 5) {
-            setState(() {
-              _state = true;
-            });
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => WebViewScreen(
-                        ip: ip,
-                      )),
-            );
+    if (Platform.isIOS) {
+      final m = await searcher.start(reusePort: true);
+
+      Timer.periodic(Duration(seconds: 5), (timer) {
+        try {
+          m.deviceList.forEach((key, value) async {
+            if (value.info.friendlyName.contains('AME Remote')) {
+              if (!_state && value.info.URLBase.length > 5) {
+                setState(() {
+                  _state = true;
+                });
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => WebViewScreen(
+                            ip: value.info.URLBase + ":8090",
+                          )),
+                );
+                searcher.stop();
+                print('ssdp Service found ');
+              }
+            }
+            ;
+            //print('lol ' + value.info.friendlyName);
+            // final text = await value.position();
+            // final r = await value.seekByCurrent(text, 10);
+            // print(r);
+          });
+        } catch (e) {}
+      });
+    } else {
+      // This is the type of service we're looking for :
+      var disc = new DeviceDiscoverer();
+      await disc.start(ipv6: false);
+      disc.quickDiscoverClients().listen((client) async {
+        try {
+          var dev = await client.getDevice();
+          if (dev.friendlyName == "AME Remote") {
+            String ip = utf8.decode(base64.decode(dev.manufacturer)) + ":8090";
+            print('Web Remote found at: ' + ip);
+            if (!_state && ip.length > 5) {
+              setState(() {
+                _state = true;
+              });
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => WebViewScreen(
+                          ip: ip,
+                        )),
+              );
+            }
           }
+        } catch (e, stack) {
+          print("ERROR: ${e} - ${client.location}");
+          print(stack);
         }
-      } catch (e, stack) {
-        print("ERROR: ${e} - ${client.location}");
-        print(stack);
-      }
-    });
-
+      });
+    }
     String type = '_ame-lg-client._tcp';
 // Once defined, we can start the discovery :
     BonsoirDiscovery discovery = BonsoirDiscovery(type: type);
@@ -157,6 +189,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     )),
           );
           print('Service found : ${event.service!.toJson()}');
+          try {
+            searcher.stop();
+          } catch (e) {}
         }
         // Then if you want to stop the discovery :
         discovery.stop();
@@ -177,6 +212,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     )),
           );
           print('Service found : ${event.service!.toJson()}');
+          try {
+            searcher.stop();
+          } catch (e) {}
         }
         // Then if you want to stop the discovery :
         discovery.stop();

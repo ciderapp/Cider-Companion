@@ -24,7 +24,7 @@ class WebViewExampleState extends State<WebViewScreen> {
         onWillPop: () async => false,
         child: WebView(
           javascriptMode: JavascriptMode.unrestricted,
-          initialUrl: "http://" + widget.ip.replaceAll("%3", ''),
+          initialUrl: widget.ip.replaceAll("%3", ''),
         ));
   }
 }

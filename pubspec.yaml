@@ -36,6 +36,7 @@ dependencies:
       url: git://github.com/vapormusic/upnp.dart.git
       ref: main
   dlna_dart: ^0.0.4
+  fluttertoast: ^8.0.8
 
 dev_dependencies:
   flutter_test:

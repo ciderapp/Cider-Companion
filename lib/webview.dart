@@ -30,12 +30,12 @@ class WebViewExampleState extends State<WebViewScreen> {
         textColor: Colors.white,
         fontSize: 16.0);
     return WillPopScope(
-        onWillPop: () async => false,
-        child: Column(children: [
-          WebView(
-            javascriptMode: JavascriptMode.unrestricted,
-            initialUrl: widget.ip.replaceAll("%3", ''),
-          ),
-        ]));
+      onWillPop: () async => false,
+      child: WebView(
+        javascriptMode: JavascriptMode.unrestricted,
+        initialUrl: (widget.ip.contains("http://") ? "" : "http://") +
+            widget.ip.replaceAll("%3", ''),
+      ),
+    );
   }
 }

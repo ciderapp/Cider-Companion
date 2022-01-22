@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:ame_remote/webview.dart';
+import 'package:cider_remote/webview.dart';
 import 'package:bonsoir/bonsoir.dart';
 import 'package:dlna_dart/dlna.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.pink,
       ),
       darkTheme: _darkTheme,
-      home: MyHomePage(title: 'AME'),
+      home: MyHomePage(title: 'Cider'),
     );
   }
 }
@@ -168,61 +168,85 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 // Once defined, we can start the discovery :
     BonsoirDiscovery discovery = BonsoirDiscovery(type: type);
     await discovery.ready;
-    await discovery.start();
-
+    await discovery.start().then((value) => {
 // If you want to listen to the discovery :
-    discovery.eventStream!.listen((event) {
-      if (event.type ==
-          BonsoirDiscoveryEventType.DISCOVERY_SERVICE_RESOLVE_FAILED) {
-        print('s');
-        String ip = utf8.decode(base64.decode(event.service!.name));
-        print('Web Remote found at: ' + ip);
-        if (!_state && ip.length > 5) {
-          setState(() {
-            _state = true;
-          });
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => WebViewScreen(
-                      ip: ip,
-                    )),
-          );
-          print('Service found : ${event.service!.toJson()}');
-          try {
-            searcher.stop();
-          } catch (e) {}
-        }
-        // Then if you want to stop the discovery :
-        discovery.stop();
-      } else if (event.type ==
-          BonsoirDiscoveryEventType.DISCOVERY_SERVICE_FOUND) {
-        print('s');
-        String ip = utf8.decode(base64.decode(event.service!.name));
-        print('Web Remote found at: ' + ip);
-        if (!_state && ip.length > 5) {
-          setState(() {
-            _state = true;
-          });
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => WebViewScreen(
-                      ip: ip,
-                    )),
-          );
-          print('Service found : ${event.service!.toJson()}');
-          try {
-            searcher.stop();
-          } catch (e) {}
-        }
-        // Then if you want to stop the discovery :
-        discovery.stop();
-      } else if (event.type ==
-          BonsoirDiscoveryEventType.DISCOVERY_SERVICE_LOST) {
-        print('Service lost : ${event.service!.toJson()}');
-      }
-    });
+          discovery.eventStream!.listen((event) {
+            print('lmao');
+            if (event.type ==
+                BonsoirDiscoveryEventType.DISCOVERY_SERVICE_RESOLVED) {
+              print('s');
+              String ip = utf8.decode(base64.decode(event.service!.name));
+              print('Web Remote found at: ' + ip);
+              if (!_state && ip.length > 5) {
+                setState(() {
+                  _state = true;
+                });
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => WebViewScreen(
+                            ip: ip,
+                          )),
+                );
+                print('Service found : ${event.service!.toJson()}');
+                try {
+                  searcher.stop();
+                } catch (e) {}
+              }
+              // Then if you want to stop the discovery :
+              discovery.stop();
+            } else if (event.type ==
+                BonsoirDiscoveryEventType.DISCOVERY_SERVICE_RESOLVE_FAILED) {
+              print('s');
+              String ip = utf8.decode(base64.decode(event.service!.name));
+              print('Web Remote found at: ' + ip);
+              if (!_state && ip.length > 5) {
+                setState(() {
+                  _state = true;
+                });
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => WebViewScreen(
+                            ip: ip,
+                          )),
+                );
+                print('Service found : ${event.service!.toJson()}');
+                try {
+                  searcher.stop();
+                } catch (e) {}
+              }
+              // Then if you want to stop the discovery :
+              discovery.stop();
+            } else if (event.type ==
+                BonsoirDiscoveryEventType.DISCOVERY_SERVICE_FOUND) {
+              print('s');
+              String ip = utf8.decode(base64.decode(event.service!.name));
+              print('Web Remote found at: ' + ip);
+              if (!_state && ip.length > 5) {
+                setState(() {
+                  _state = true;
+                });
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => WebViewScreen(
+                            ip: ip,
+                          )),
+                );
+                print('Service found : ${event.service!.toJson()}');
+                try {
+                  searcher.stop();
+                } catch (e) {}
+              }
+              // Then if you want to stop the discovery :
+              discovery.stop();
+            } else if (event.type ==
+                BonsoirDiscoveryEventType.DISCOVERY_SERVICE_LOST) {
+              print('Service lost : ${event.service!.toJson()}');
+            }
+          })
+        });
   }
 
   late AnimationController animationController;
@@ -249,7 +273,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            'Scanning Apple Music Electron Remote instance',
+            'Scanning Cider Remote instance',
           ),
           Container(height: 20),
           CircularProgressIndicator(

@@ -1,6 +1,6 @@
 {
-    "name": "ame_remote",
-    "short_name": "ame_remote",
+    "name": "cider_remote",
+    "short_name": "cider_remote",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

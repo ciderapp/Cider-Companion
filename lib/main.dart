@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       scaffoldBackgroundColor: Colors.black,
     );
     return MaterialApp(
-      title: 'AME Remote',
+      title: 'Cider Remote',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   void _incrementCounter() {}
 
   void _scanMDNS() async {
-    //const String name = '_ame-lg-client._tcp.local';
+    //const String name = '__cider-remote._tcp.local';
     // final MDnsClient client = MDnsClient();
     // // Start the client with default options.
     // await client.start();
@@ -111,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       Timer.periodic(Duration(seconds: 5), (timer) {
         try {
           m.deviceList.forEach((key, value) {
-            if (value.info.friendlyName.contains('AME Remote')) {
+            if (value.info.friendlyName.contains('Cider Remote')) {
               if (!_state && value.info.URLBase.length > 5) {
                 setState(() {
                   _state = true;
@@ -120,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   context,
                   MaterialPageRoute(
                       builder: (context) => WebViewScreen(
-                            ip: value.info.URLBase + ":8090",
+                            ip: value.info.URLBase,
                           )),
                 );
                 searcher.stop();
@@ -142,8 +142,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       disc.quickDiscoverClients().listen((client) async {
         try {
           var dev = await client.getDevice();
-          if (dev.friendlyName == "AME Remote") {
-            String ip = utf8.decode(base64.decode(dev.manufacturer)) + ":8090";
+          if (dev.friendlyName == "Cider Remote") {
+            String ip = utf8.decode(base64.decode(dev.manufacturer));
             print('Web Remote found at: ' + ip);
             if (!_state && ip.length > 5) {
               setState(() {
@@ -164,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         }
       });
     }
-    String type = '_ame-lg-client._tcp';
+    String type = '_cider-remote._tcp';
 // Once defined, we can start the discovery :
     BonsoirDiscovery discovery = BonsoirDiscovery(type: type);
     await discovery.ready;
@@ -175,7 +175,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       if (event.type ==
           BonsoirDiscoveryEventType.DISCOVERY_SERVICE_RESOLVE_FAILED) {
         print('s');
-        String ip = utf8.decode(base64.decode(event.service!.name)) + ":8090";
+        String ip = utf8.decode(base64.decode(event.service!.name));
         print('Web Remote found at: ' + ip);
         if (!_state && ip.length > 5) {
           setState(() {
@@ -198,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       } else if (event.type ==
           BonsoirDiscoveryEventType.DISCOVERY_SERVICE_FOUND) {
         print('s');
-        String ip = utf8.decode(base64.decode(event.service!.name)) + ":8090";
+        String ip = utf8.decode(base64.decode(event.service!.name));
         print('Web Remote found at: ' + ip);
         if (!_state && ip.length > 5) {
           setState(() {

@@ -11,7 +11,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>AME Remote</string>
+	<string>Cider Remote</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -30,11 +30,11 @@
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_dartobservatory._tcp</string>
-		<string>_ame-lg-client._tcp</string>
-		<string>_ame-lg-client._tcp.</string>
+		<string>_cider-remote._tcp</string>
+		<string>_cider-remote._tcp.</string>
 	</array>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>Allow to scan AME remote</string>
+	<string>Allow to scan Cider Remote</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>external-accessory</string>

@@ -1,4 +1,4 @@
-package com.ame.webremote
+package com.ciderapp.webremote
 
 import io.flutter.embedding.android.FlutterActivity
 

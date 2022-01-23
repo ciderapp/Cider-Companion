@@ -2,7 +2,8 @@
     package="com.ciderapp.webremote">
    <application
         android:label="Cider Remote"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

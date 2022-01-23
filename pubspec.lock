@@ -22,20 +22,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.1"
-  bonsoir:
-    dependency: "direct main"
-    description:
-      name: bonsoir
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1+2"
-  bonsoir_platform_interface:
-    dependency: transitive
-    description:
-      name: bonsoir_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.0+1"
   boolean_selector:
     dependency: transitive
     description:
@@ -85,13 +71,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
-  dlna_dart:
-    dependency: "direct main"
-    description:
-      name: dlna_dart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.4"
   fake_async:
     dependency: transitive
     description:
@@ -156,13 +135,48 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
-  multicast_dns:
-    dependency: "direct main"
+  nested:
+    dependency: transitive
     description:
-      name: multicast_dns
+      name: nested
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.1"
+    version: "1.0.0"
+  nsd:
+    dependency: "direct main"
+    description:
+      name: nsd
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.3.0"
+  nsd_android:
+    dependency: transitive
+    description:
+      name: nsd_android
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
+  nsd_ios:
+    dependency: transitive
+    description:
+      name: nsd_ios
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
+  nsd_macos:
+    dependency: transitive
+    description:
+      name: nsd_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
+  nsd_platform_interface:
+    dependency: transitive
+    description:
+      name: nsd_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.3.0"
   path:
     dependency: transitive
     description:
@@ -183,7 +197,14 @@ packages:
       name: plugin_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.1.2"
+  provider:
+    dependency: transitive
+    description:
+      name: provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.0.2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -238,15 +259,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0"
-  upnp:
-    dependency: "direct main"
+  uuid:
+    dependency: transitive
     description:
-      path: "."
-      ref: main
-      resolved-ref: "12144d22c62dca5dc88362cf6fd19a353af30e55"
-      url: "git://github.com/vapormusic/upnp.dart.git"
-    source: git
-    version: "3.0.2"
+      name: uuid
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.5"
   vector_math:
     dependency: transitive
     description:

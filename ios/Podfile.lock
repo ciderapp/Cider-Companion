@@ -1,18 +1,18 @@
 PODS:
-  - bonsoir (1.0.1):
-    - Flutter
   - Flutter (1.0.0)
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
+  - nsd_ios (0.0.1):
+    - Flutter
   - Toast (4.0.0)
   - webview_flutter_wkwebview (0.0.1):
     - Flutter
 
 DEPENDENCIES:
-  - bonsoir (from `.symlinks/plugins/bonsoir/ios`)
   - Flutter (from `Flutter`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - nsd_ios (from `.symlinks/plugins/nsd_ios/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
 SPEC REPOS:
@@ -20,22 +20,22 @@ SPEC REPOS:
     - Toast
 
 EXTERNAL SOURCES:
-  bonsoir:
-    :path: ".symlinks/plugins/bonsoir/ios"
   Flutter:
     :path: Flutter
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
+  nsd_ios:
+    :path: ".symlinks/plugins/nsd_ios/ios"
   webview_flutter_wkwebview:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
 SPEC CHECKSUMS:
-  bonsoir: c97724f65041a4068af8ab5f3449ae7f58b725b1
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
+  nsd_ios: 8c37babdc6538e3350dbed3a52674d2edde98173
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   webview_flutter_wkwebview: 005fbd90c888a42c5690919a1527ecc6649e1162
 
-PODFILE CHECKSUM: a5ead389ae8478b2f010fbadad4f103eae9ff09f
+PODFILE CHECKSUM: b1f7a399522c118a74b177b13c01eca692aa7e6d
 
 COCOAPODS: 1.10.1

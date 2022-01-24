@@ -31,6 +31,7 @@ dependencies:
   webview_flutter: ^2.0.13
   fluttertoast: ^8.0.8
   nsd: ^1.3.0
+  qr_code_scanner: ^0.6.1
 
 dev_dependencies:
   flutter_test:

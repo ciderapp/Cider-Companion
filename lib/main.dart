@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cider_remote/qrview.dart';
 import 'package:cider_remote/webview.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nsd/nsd.dart';
 
@@ -99,21 +101,32 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     _scanMDNS();
     return Scaffold(
-        body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'Scanning Cider Remote instance',
-          ),
-          Container(height: 20),
-          CircularProgressIndicator(
-            valueColor: animationController
-                .drive(ColorTween(begin: Colors.blueAccent, end: Colors.red)),
-          ),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Scanning Cider Remote instance',
+            ),
+            Container(height: 20),
+            CircularProgressIndicator(
+              valueColor: animationController
+                  .drive(ColorTween(begin: Colors.blueAccent, end: Colors.red)),
+            ),
+          ],
+        ),
       ),
-    ) // This trailing comma makes auto-formatting nicer for build methods.
-        );
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => QRViewScreen()),
+          );
+        },
+        label: const Text('Scan'),
+        icon: const Icon(CupertinoIcons.qrcode),
+        backgroundColor: Colors.pink,
+      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
   }
 }

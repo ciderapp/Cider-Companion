@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -29,13 +30,15 @@ class WebViewExampleState extends State<WebViewScreen> {
         backgroundColor: Colors.red,
         textColor: Colors.white,
         fontSize: 16.0);
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: WebView(
-        javascriptMode: JavascriptMode.unrestricted,
-        initialUrl: (widget.ip.contains("http://") ? "" : "http://") +
-            widget.ip.replaceAll("%3", ''),
-      ),
-    );
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.dark,
+        child: WillPopScope(
+          onWillPop: () async => false,
+          child: WebView(
+            javascriptMode: JavascriptMode.unrestricted,
+            initialUrl: (widget.ip.contains("http://") ? "" : "http://") +
+                widget.ip.replaceAll("%3", ''),
+          ),
+        ));
   }
 }

@@ -61,6 +61,7 @@ class _QRViewScreen extends State<QRViewScreen> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
+        controller.stopCamera();
         if (result != null && result!.code != null) {
           Navigator.push(
             context,

@@ -37,7 +37,6 @@
 	<string>Allow to scan Cider Remote</string>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>external-accessory</string>
 		<string>fetch</string>
 		<string>processing</string>
 	</array>

@@ -53,6 +53,14 @@ class _QRViewScreen extends State<QRViewScreen> {
           )
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        label: const Text('Go back'),
+        backgroundColor: Colors.pink,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
